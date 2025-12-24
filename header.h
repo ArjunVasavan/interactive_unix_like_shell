@@ -14,7 +14,7 @@
  
 
 #define BUILTIN		1
-#define EXTERNAL	2
+#define EXTERNAL	2 //TODO: return it on check_command_type function
 #define NO_COMMAND  3
 
 #define ANSI_COLOR_RED     "\x1b[31m"
@@ -40,6 +40,6 @@ void execute_internal_commands(char *input_string);
 
 void signal_handler(int sig_num);
 
-void extract_external_commands(char **external_commands);
+void extract_external_commands(char **external_commands); // convert the file contents to 2d array
 
 #endif

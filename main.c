@@ -11,6 +11,6 @@ int main(int argc, char** argv) {
 
     char input_string[25];
 
-    scan_input(prompt,input_string); // TODO: 
+    scan_input(prompt,input_string); 
 
 }
