@@ -9,12 +9,6 @@ char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dir
     "exit", "exec", "shopt", "caller", "true", "type", "hash", "bind", "help", NULL };
 
 
-//TODO: call extract_external_command function 
-// 1-> read till \n
-// 2-> allocate memory according to column based on length of command
-// 3-> store the command to 2d array
-// do this till NULL
-
 int external_commands_count = 0; // NOTE Use EXTERN to collect this on that other file
 
 void extract_external_commands(char **external_commands) {
@@ -62,9 +56,33 @@ void extract_external_commands(char **external_commands) {
 // create an array
 // at the end put \0 char 
 // EXAMPLE: [l][s][\0]
-//
-//  
-//
+
+
+char *get_command(char *input_string) {
+
+    char tmp_buff[100];
+
+    int i = 0;
+
+    if ( input_string[i] == ' ' ) {
+
+        return NULL;
+
+    }
+    while(input_string[i] != ' ' ) {
+
+        tmp_buff[i] = input_string[i];
+        i+=1;
+    }
+
+    tmp_buff[i] = '\0';
+
+    char* ret_buff = (char*) malloc((strlen(tmp_buff)+1)*sizeof(char));
+
+    strcpy(ret_buff,tmp_buff);
+
+    return ret_buff;
+}
 
 //TODO: int check_command_type (char* ) {
 //

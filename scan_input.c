@@ -2,14 +2,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 void scan_input(char *prompt, char *input_string) {
-
-    //TODO: call extract_external_command();
-    //declare an 2d array *ext_command[][] which should be fs2d
-    //and pass it to extract_external_command function
-
-
-    //NOTE: creating an FSSD array to extract external commands
 
     char* external_commands[153];
 
@@ -31,6 +25,8 @@ void scan_input(char *prompt, char *input_string) {
 
         getchar(); // Clearing the buffer
 
+        //FIXME : left to do it at last for doing PS1 operation
+
         if ( strncmp(input_string,"PS1=",4) == 0 ) {
 
             if ( input_string[4] != ' ' ) {
@@ -39,7 +35,7 @@ void scan_input(char *prompt, char *input_string) {
 
             } else {
 
-                // TODO: print ERROR message
+                // print ERROR message
 
             }
 
@@ -54,7 +50,19 @@ void scan_input(char *prompt, char *input_string) {
         // logic
         //}
 
-        // char* command = get_command(input_string);
+        char* command = get_command(input_string);
+
+        if ( command == NULL ) {
+
+            perror("[ERROR] < get_command > founded ' ' at beginning ");
+
+        }
+        printf("Command returned is %s\n",command);
+
+        //TODO int type = check_command_type(command);
+        
+
+        free(command);
     }
 
 
