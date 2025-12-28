@@ -19,7 +19,6 @@ cd interactive_unix_like_shell
 
 ## Compilation
 
-Or with Makefile:
 ```bash
 make
 make run
