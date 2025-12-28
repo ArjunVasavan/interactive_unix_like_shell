@@ -1,5 +1,6 @@
 #include "header.h"
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 
 char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dirs", "let", "eval",
@@ -69,8 +70,8 @@ char *get_command(char *input_string) {
         return NULL;
 
     while (input_string[i] != ' ' &&
-           input_string[i] != '\0' &&
-           i < 99) {
+        input_string[i] != '\0' &&
+        i < 99) {
         tmp_buff[i] = input_string[i];
         i++;
     }
@@ -108,7 +109,7 @@ int check_command_type(char *command) {
 
         if (strcmp(external_commands[i],command) == 0 ) {
 
-                    return EXTERNAL;
+            return EXTERNAL;
 
         }
     }
@@ -116,31 +117,32 @@ int check_command_type(char *command) {
     return NO_COMMAND;
 }
 
-//TODO: void extract_external_command(char* input ) {
-//
-//          
-//
-//}
-
 
 void execute_external_commands(char *input_string,char* command ) {
 
-    int len = strlen(command);
+    char input_copy[1024];
 
-    char* argv[20];
+    strncpy(input_copy, input_string, sizeof(input_copy) - 1);
 
+    input_copy[sizeof(input_copy) - 1] = '\0';
+
+    char *argv[20];
     int i = 0;
 
     argv[i++] = command;
 
-    char* token = strtok(input_string+len+1," "); // len + 1 for removing that extra space after main command
+    char *args = input_copy + strlen(command);
+    while (*args == ' ') args++;
 
-    while ( token != NULL ) {
+    char *token = NULL;
 
+    if (*args != '\0')
+        token = strtok(args, " ");
+
+    while (token != NULL && i < 19)
+    {
         argv[i++] = token;
-
-        token = strtok(NULL," ");
-
+        token = strtok(NULL, " ");
     }
 
     argv[i] = NULL;
@@ -157,7 +159,7 @@ void execute_external_commands(char *input_string,char* command ) {
     }
 
     wait(NULL);
-        
+
 }
 
 
@@ -176,9 +178,9 @@ void execute_internal_commands(char *input_string) {
         }
 
         printf("PATH: %s\n",buff);
-    
+
     } else if ( strncmp ( input_string , "cd" , 2) == 0  ) {
-    
+
         chdir(input_string+3);
 
         char test_buff[550];
