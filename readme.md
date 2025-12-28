@@ -13,7 +13,7 @@ half
 
 Clone the repository:
 ```bash
-https://github.com/ArjunVasavan/interactive_unix_like_shell
+git clone https://github.com/ArjunVasavan/interactive_unix_like_shell
 cd interactive_unix_like_shell
 ```
 
