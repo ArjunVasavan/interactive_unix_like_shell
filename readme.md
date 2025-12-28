@@ -1,12 +1,9 @@
 # Interactive unix like shell
-![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)
-![GCC](https://img.shields.io/badge/GCC-11+-E23237?style=for-the-badge)
-![CMake](https://img.shields.io/badge/CMake-3.15+-064F8C?style=for-the-badge&logo=cmake&logoColor=white)
-![Platform](https://img.shields.io/badge/Platform-Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
-![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
+
 ![C](https://img.shields.io/badge/C-00599C?style=flat-square&logo=c&logoColor=white)
-![Build](https://img.shields.io/badge/build-passing-brightgreen?style=flat-square)
+![Status](https://img.shields.io/badge/status-WIP-orange?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
+
 ## Description
 
 Creating an mini shell which replicates actual unix not perfectly only
