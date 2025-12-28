@@ -6,15 +6,15 @@
 
 ## Description
 
-Creatign an mini shell which replicates actual unix not perfectly only
+Creating an mini shell which replicates actual unix not perfectly only
 half 
 
 ## Installation
 
 Clone the repository:
 ```bash
-git clone https://github.com/username/project-name.git
-cd project-name
+https://github.com/ArjunVasavan/interactive_unix_like_shell
+cd interactive_unix_like_shell
 ```
 
 ## Compilation
