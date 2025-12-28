@@ -67,7 +67,9 @@ void scan_input(char *prompt, char *input_string) {
             default:{
                 printf("reached default\n");
             }
+
         }
+
         free(command);
     }
 }

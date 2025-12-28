@@ -34,27 +34,35 @@ void extract_external_commands(char **external_commands) {
 
             temp_buff[i] = '\0';
 
-            if (external_commands_count < 155) {   // bound check
+            if (external_commands_count < 155) {   
+
                 int len = strlen(temp_buff);
+
                 external_commands[external_commands_count] =
-                    malloc((len + 1) * sizeof(char));   // fixed malloc
+                    malloc((len + 1) * sizeof(char));
 
                 strcpy(external_commands[external_commands_count], temp_buff);
                 external_commands_count++;
+
             }
 
             i = 0;
         }
     }
 
-    /*  handle last line if no newline */
     if (i > 0 && external_commands_count < 155) {
+
         temp_buff[i] = '\0';
+
         int len = strlen(temp_buff);
+
         external_commands[external_commands_count] =
             malloc((len + 1) * sizeof(char));
+
         strcpy(external_commands[external_commands_count], temp_buff);
+
         external_commands_count++;
+
     }
 
     close(fd);
@@ -72,6 +80,7 @@ char *get_command(char *input_string) {
     while (input_string[i] != ' ' &&
         input_string[i] != '\0' &&
         i < 99) {
+
         tmp_buff[i] = input_string[i];
         i++;
     }
