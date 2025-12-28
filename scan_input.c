@@ -8,6 +8,14 @@ void scan_input(char *prompt, char *input_string) {
     //declare an 2d array *ext_command[][] which should be fs2d
     //and pass it to extract_external_command function
 
+
+    //NOTE: creating an FSSD array to extract external commands
+
+    char* external_commands[153];
+
+    extract_external_commands(external_commands);
+
+
     while (true) {
 
         printf("%s",prompt);
@@ -34,14 +42,12 @@ void scan_input(char *prompt, char *input_string) {
         // int type = check_command_type(command);
         // if ( type is BULT ) {
         // logic 
-        //  
         //  call  exec_internal_command(char* input)
-        //
-        //
         // } else if ( type is EXTERNAL ) {
         // logic
         //}
 
+        char* command = get_command(input_string);
     }
 
 

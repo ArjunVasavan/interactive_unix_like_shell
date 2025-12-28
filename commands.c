@@ -1,4 +1,9 @@
+#include "header.h"
+#include <string.h>
+#include <fcntl.h>
+#include <stdlib.h>
 #include<stdio.h>
+#include <unistd.h>
 char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dirs", "let", "eval",
     "set", "unset", "export", "declare", "typeset", "readonly", "getopts", "source",
     "exit", "exec", "shopt", "caller", "true", "type", "hash", "bind", "help", NULL };
@@ -10,6 +15,42 @@ char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dir
 // 3-> store the command to 2d array
 // do this till NULL
 
+int ext_count = 0; // NOTE Use EXTERN to collect this on that other file
+
+void extract_external_commands(char **external_commands) {
+
+    int fd = open("external_commands.txt",O_RDONLY);
+
+    char char_buff; // to collect each character by character
+
+    char temp_buff[30]; // to store when running inside loop
+    int i = 0;
+
+
+    while ( read(fd,&char_buff,1) != EOF ) {
+
+
+        if ( char_buff != '\n' ) {
+
+            temp_buff[i] = char_buff;
+
+            i+=1;
+
+        } else {
+
+            int len = strlen(temp_buff);
+
+            external_commands[ext_count] = (char*)malloc(len+1 * (sizeof(char)));
+
+            strcpy(external_commands[ext_count],temp_buff);
+
+            ext_count+=1;
+
+            i = 0;
+        }
+
+    }
+}
 
 //TODO: get_command();
 //
