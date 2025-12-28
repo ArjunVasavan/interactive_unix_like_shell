@@ -15,7 +15,7 @@ char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dir
 // 3-> store the command to 2d array
 // do this till NULL
 
-int ext_count = 0; // NOTE Use EXTERN to collect this on that other file
+int external_commands_count = 0; // NOTE Use EXTERN to collect this on that other file
 
 void extract_external_commands(char **external_commands) {
 
@@ -27,7 +27,7 @@ void extract_external_commands(char **external_commands) {
     int i = 0;
 
 
-    while ( read(fd,&char_buff,1) != EOF ) {
+    while ( read(fd,&char_buff,1) != 0 ) {
 
 
         if ( char_buff != '\n' ) {
@@ -38,18 +38,21 @@ void extract_external_commands(char **external_commands) {
 
         } else {
 
+            temp_buff[i] = '\0';
+
             int len = strlen(temp_buff);
 
-            external_commands[ext_count] = (char*)malloc(len+1 * (sizeof(char)));
+            external_commands[external_commands_count] = (char*)malloc(len+1 * (sizeof(char)));
 
-            strcpy(external_commands[ext_count],temp_buff);
+            strcpy(external_commands[external_commands_count],temp_buff);
 
-            ext_count+=1;
+            external_commands_count+=1;
 
             i = 0;
         }
 
     }
+
 }
 
 //TODO: get_command();

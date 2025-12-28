@@ -15,6 +15,13 @@ void scan_input(char *prompt, char *input_string) {
 
     extract_external_commands(external_commands);
 
+    extern int external_commands_count;
+
+    for ( int i = 0 ; i < external_commands_count ; i++ ) {
+
+        printf("%s\n",external_commands[i]);
+
+    }
 
     while (true) {
 
@@ -47,7 +54,7 @@ void scan_input(char *prompt, char *input_string) {
         // logic
         //}
 
-        char* command = get_command(input_string);
+        // char* command = get_command(input_string);
     }
 
 
