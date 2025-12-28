@@ -1,8 +1,9 @@
 # Interactive unix like shell
 
-![Language](https://img.shields.io/badge/language-C-blue)
-![Status](https://img.shields.io/badge/status-active-success)
-
+![C](https://img.shields.io/badge/C-99-blue)
+![Status](https://img.shields.io/badge/status-WIP-orange)
+![Build](https://img.shields.io/badge/build-unstable-yellow)
+![License](https://img.shields.io/badge/license-MIT-green)
 
 ## Description
 
