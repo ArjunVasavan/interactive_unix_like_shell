@@ -39,6 +39,9 @@ void echo(char *input_string, int status);
 
 void execute_internal_commands(char *input_string);
 
+
+void execute_external_commands(char *input_string, char* command);
+
 void signal_handler(int sig_num);
 
 void extract_external_commands(char **external_commands); // convert the file contents to 2d array

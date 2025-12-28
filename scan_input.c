@@ -46,8 +46,6 @@ void scan_input(char *prompt, char *input_string) {
 
             case BUILTIN: {
 
-                printf("Builtin\n");
-
                 execute_internal_commands(input_string);
 
                 break;
@@ -55,7 +53,7 @@ void scan_input(char *prompt, char *input_string) {
 
             case EXTERNAL: {
 
-                printf("External\n");
+                execute_external_commands(input_string,command);
 
                 break;
             }

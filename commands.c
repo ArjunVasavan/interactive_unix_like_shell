@@ -1,5 +1,6 @@
 #include "header.h"
 #include <stdio.h>
+#include <unistd.h>
 
 char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dirs", "let", "eval",
     "set", "unset", "export", "declare", "typeset", "readonly", "getopts", "source",
@@ -122,41 +123,71 @@ int check_command_type(char *command) {
 //}
 
 
-//TODO: void extract_internal_command(char* input ) { used for BUILTIN
-//          if ( input ==  exit ) {
-//              exit(0);
-//          } else if ( input == pwd ) {
-//             call getcwd() function
-//             1. declare buffer[50];
-//             2. getcwd(buffer,50);
-//             printf("%s\n",buffer);
-//             // for doing pwd theres an function 
-//          } else if ( input == cd ) {
-//              eg: input -> cd newdir
-//              use strncmp to get newdir
-//              call chdir function
-//              chdir(PATH which is input+3 {c d <space> => 3 });
-//              use getcwd to confirm path is reached
-//          }
-//}
+void execute_external_commands(char *input_string,char* command ) {
 
-//BUG sometimes stack smashing is happening 
+    int len = strlen(command);
+
+    char* argv[20];
+
+    int i = 0;
+
+    argv[i++] = command;
+
+    char* token = strtok(input_string+len+1," "); // len + 1 for removing that extra space after main command
+
+    while ( token != NULL ) {
+
+        argv[i++] = token;
+
+        token = strtok(NULL," ");
+
+    }
+
+    argv[i] = NULL;
+
+    pid_t pid = fork();
+
+
+    if ( pid == 0 ) { // child
+
+        execvp(argv[0],argv);
+
+        perror("execvp");
+        exit(1);
+    }
+
+    wait(NULL);
+        
+}
+
+
 void execute_internal_commands(char *input_string) {
 
-    printf("Input string is %s\n",input_string);
     if ( strncmp(input_string,"exit",4) == 0 ) {
         exit(0);
     } else if ( strncmp(input_string,"pwd",3) == 0 ) {
 
-        char buff[50];
+        char buff[550];
 
-        getcwd(buff,50);
+        if(getcwd(buff,sizeof(buff) ) == NULL ) {
+
+            perror("getcwd");
+            exit(1);
+        }
 
         printf("PATH: %s\n",buff);
     
-    } else if ( strncmp ( input_string , "cd" , 2) ) {
+    } else if ( strncmp ( input_string , "cd" , 2) == 0  ) {
     
+        chdir(input_string+3);
 
+        char test_buff[550];
+
+        getcwd(test_buff,sizeof(test_buff));
+
+        if ( strcmp(test_buff,input_string+3) != 0 ) {
+            printf("[ERROR] no such directory\n");
+        }
 
     }
 
