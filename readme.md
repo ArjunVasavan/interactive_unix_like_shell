@@ -30,8 +30,6 @@ make clean
 
 - GCC compiler
 - Linux/Unix system
-- Additional dependencies if any
-
 
 ## Author
 
