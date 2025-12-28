@@ -1,27 +1,18 @@
 #include "header.h"
-#include <stdbool.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-void scan_input(char *prompt, char *input_string) {
 
-    char* external_commands[153];
+char* external_commands[155];
+
+void scan_input(char *prompt, char *input_string) {
 
     extract_external_commands(external_commands);
 
     extern int external_commands_count;
 
-    for ( int i = 0 ; i < external_commands_count ; i++ ) {
-
-        printf("%s\n",external_commands[i]);
-
-    }
-
     while (true) {
 
         printf("%s",prompt);
 
-        scanf("%[^\n]",input_string);
+        scanf("%24[^\n]",input_string);
 
         getchar(); // Clearing the buffer
 
@@ -41,15 +32,6 @@ void scan_input(char *prompt, char *input_string) {
 
         }
 
-        //TODO: call char* command = get_command(input);
-        // int type = check_command_type(command);
-        // if ( type is BULT ) {
-        // logic 
-        //  call  exec_internal_command(char* input)
-        // } else if ( type is EXTERNAL ) {
-        // logic
-        //}
-
         char* command = get_command(input_string);
 
         if ( command == NULL ) {
@@ -57,13 +39,37 @@ void scan_input(char *prompt, char *input_string) {
             perror("[ERROR] < get_command > founded ' ' at beginning ");
 
         }
-        printf("Command returned is %s\n",command);
 
-        //TODO int type = check_command_type(command);
-        
+        int type = check_command_type(command);
 
+        switch (type) {
+
+            case BUILTIN: {
+
+                printf("Builtin\n");
+
+                execute_internal_commands(input_string);
+
+                break;
+            }
+
+            case EXTERNAL: {
+
+                printf("External\n");
+
+                break;
+            }
+
+            case NO_COMMAND: {
+
+                printf("No command\n");
+
+                break;
+            }
+            default:{
+                printf("reached default\n");
+            }
+        }
         free(command);
     }
-
-
 }

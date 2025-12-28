@@ -2,6 +2,7 @@
 #define MAIN_H
 
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio_ext.h>
@@ -11,7 +12,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <sys/wait.h>
- 
+
 
 #define BUILTIN		1
 #define EXTERNAL	2 //TODO: return it on check_command_type function
