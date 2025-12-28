@@ -1,6 +1,6 @@
 # Interactive unix like shell
 
-![C](https://img.shields.io/badge/C-00599C?style=flat-square&logo=c&logoColor=white)
+![C](https://img.shields.io/badge/-00599C?style=flat-square&logo=c&logoColor=white)
 ![Status](https://img.shields.io/badge/status-WIP-orange?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
 
