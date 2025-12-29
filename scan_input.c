@@ -10,7 +10,12 @@ void scan_input(char *prompt, char *input_string) {
 
     while (true) {
 
+
+        printf("\033[1;36m");
         printf("%s",prompt);
+        printf("\033[01;33m");
+        printf("$ ");
+        printf("\033[0m");
 
         scanf("%24[^\n]",input_string);
 

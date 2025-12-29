@@ -6,7 +6,7 @@ int main(int argc, char** argv) {
 
     system("clear"); //  clears the CLI
 
-    char prompt[25] = "Minishell$: "; // this will be printed on cli
+    char prompt[25] = "Minishell: "; // this will be printed on cli
 
     char input_string[25];
 
