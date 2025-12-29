@@ -1,4 +1,5 @@
 #include "header.h"
+#include <stdio.h>
 
 char* external_commands[155];
 
@@ -58,21 +59,20 @@ void scan_input(char *prompt, char *input_string) {
 
             case EXTERNAL: {
 
-                // TODO: special case for pipe logic
-                // if ( check if pipe is present ) {
-                //      // do that n pipe logic 
-                // }
-                // 
-                if (pipecheck(input_string) ) {
 
-                    
+                if ( pipecheck(input_string) ) {
 
-                    goto pipe_exception;
+
+                    pipe_operation(input_string);
+
+
+                } else {
+
+
+                    execute_external_commands(input_string,command);
+
                 }
 
-                execute_external_commands(input_string,command);
-
-            pipe_exception:
 
                 break;
 

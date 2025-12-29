@@ -1,4 +1,7 @@
 #include "header.h"
+#include <stdio.h>
+#include <string.h>
+#include <strings.h>
 
 char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dirs", "let", "eval",
     "set", "unset", "export", "declare", "typeset", "readonly", "getopts", "source",
@@ -7,20 +10,113 @@ char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dir
 
 int external_commands_count = 0; // NOTE Use EXTERN to collect this on that other file
 
-void pipe_operation(char *input_string) {
+void pipe_operation(char *input_string)
+{
+    char input_copy[1024];
 
+    strncpy(input_copy, input_string, sizeof(input_copy) - 1);
 
+    input_copy[sizeof(input_copy) - 1] = '\0';
 
+    char *argv[100];
+    int argc = 0;
+
+    char *token = strtok(input_copy, " ");
+
+    while (token != NULL) {
+
+        argv[argc++] = token;
+        token = strtok(NULL, " ");
+
+    }
+
+    argv[argc] = NULL;
+
+    int command_index[50];
+    int total_pipe_count = 0;
+    int cmd_count = 0;
+
+    command_index[cmd_count++] = 0;
+
+    for (int i = 0; i < argc; i++) {
+
+        if (strcmp(argv[i], "|") == 0) {
+
+            argv[i] = NULL;   // terminate previous command
+            command_index[cmd_count++] = i + 1;
+            total_pipe_count++;
+
+        }
+
+    }
+
+    int pipes[total_pipe_count][2];
+
+    for (int i = 0; i < total_pipe_count; i++) {
+
+        if (pipe(pipes[i]) == -1) {
+
+            perror("pipe");
+            exit(EXIT_FAILURE);
+
+        }
+
+    }
+
+    for (int i = 0; i <= total_pipe_count; i++) {
+
+        pid_t pid = fork();
+
+        if (pid == -1) {
+
+            perror("fork");
+            exit(EXIT_FAILURE);
+
+        }
+
+        if (pid == 0) {  // Child process
+
+            if (i > 0) {
+                dup2(pipes[i - 1][0], STDIN_FILENO);
+            }
+
+            if (i < total_pipe_count) {
+                dup2(pipes[i][1], STDOUT_FILENO);
+            }
+
+            for (int j = 0; j < total_pipe_count; j++) {
+                close(pipes[j][0]);
+                close(pipes[j][1]);
+            }
+
+            execvp(argv[command_index[i]], &argv[command_index[i]]);
+            perror("execvp");
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    for (int i = 0; i < total_pipe_count; i++) {
+        close(pipes[i][0]);
+        close(pipes[i][1]);
+    }
+
+    for (int i = 0; i <= total_pipe_count; i++) {
+        wait(NULL);
+    }
 }
+
 
 int pipecheck(char* input_string ) {
 
     int i = 0;
 
     while (input_string[i]) {
-        if ( input_string[i] == '|' ) 
-            return 1; // PIPE is present
+        if ( input_string[i] == '|' )
+            return 1;  // PIPE is present
+
+        i+=1;
     }
+
 
     return 0; // PIPE is not present
 
@@ -228,7 +324,7 @@ void execute_internal_commands(char *input_string) {
     } else if ( strncmp(input_string, "help" , 4 ) == 0 ) {
 
         printf("[USER GUIDE]: \n"); //TODO printing help option
-    
+
     }
 
 }
