@@ -4,20 +4,15 @@ char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dir
     "set", "unset", "export", "declare", "typeset", "readonly", "getopts", "source",
     "exit", "exec", "shopt", "caller", "true", "type", "hash", "bind", "help", NULL };
 
-
 int external_commands_count = 0; // NOTE Use EXTERN to collect this on that other file
 
 void pipe_operation(char *input_string)
 {
     char input_copy[1024];
-
     strncpy(input_copy, input_string, sizeof(input_copy) - 1);
-
     input_copy[sizeof(input_copy) - 1] = '\0';
-
     char *argv[100];
     int argc = 0;
-
     char *token = strtok(input_copy, " ");
 
     while (token != NULL) {
@@ -28,11 +23,9 @@ void pipe_operation(char *input_string)
     }
 
     argv[argc] = NULL;
-
     int command_index[50];
     int total_pipe_count = 0;
     int cmd_count = 0;
-
     command_index[cmd_count++] = 0;
 
     for (int i = 0; i < argc; i++) {
@@ -99,13 +92,16 @@ void pipe_operation(char *input_string)
     }
 
     for (int i = 0; i < total_pipe_count; i++) {
+
         close(pipes[i][0]);
         close(pipes[i][1]);
+
     }
 
     int status;
 
     for (int i = 0; i <= total_pipe_count; i++) {
+
         waitpid(pids[i], &status, WUNTRACED);
 
         if (WIFSTOPPED(status)) {
@@ -124,12 +120,13 @@ int pipecheck(char* input_string ) {
     int i = 0;
 
     while (input_string[i]) {
+
         if ( input_string[i] == '|' )
+
             return 1;  // PIPE is present
 
         i+=1;
     }
-
 
     return 0; // PIPE is not present
 
@@ -138,9 +135,12 @@ int pipecheck(char* input_string ) {
 void extract_external_commands(char **external_commands) {
 
     int fd = open("external_commands.txt", O_RDONLY);
+
     if (fd < 0) {
+
         perror("open");
         return;
+
     }
 
     char char_buff;

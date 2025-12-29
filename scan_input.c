@@ -8,11 +8,9 @@ void scan_input(char *prompt, char *input_string) {
     signal(SIGTSTP,signal_handler);
 
     extract_external_commands(external_commands);
-
     extern int external_commands_count;
 
     while (true) {
-
 
         printf("\033[1;36m");
         printf("%s",prompt);
@@ -21,7 +19,6 @@ void scan_input(char *prompt, char *input_string) {
         printf("\033[0m");
 
         scanf("%24[^\n]",input_string);
-
         getchar(); // Clearing the buffer
 
         //FIXME : left to do it at last for doing PS1 operation
@@ -61,23 +58,17 @@ void scan_input(char *prompt, char *input_string) {
 
             case EXTERNAL: {
 
-
                 if ( pipecheck(input_string) ) {
-
 
                     pipe_operation(input_string);
 
-
                 } else {
-
 
                     execute_external_commands(input_string,command);
 
                 }
 
-
                 break;
-
             }
 
             case NO_COMMAND: {
@@ -86,7 +77,7 @@ void scan_input(char *prompt, char *input_string) {
 
                 break;
             }
-            default:{
+            default: {
 
                 printf("[EDGE CASE]: reached default\n");
 
