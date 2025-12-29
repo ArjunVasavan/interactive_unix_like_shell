@@ -305,14 +305,10 @@ void execute_internal_commands(char *input_string) {
 
     } else if ( strncmp ( input_string , "cd" , 2) == 0  ) {
 
-        chdir(input_string+3);
+        char *path = input_string + 3;   // after "cd "
 
-        char test_buff[550];
-
-        getcwd(test_buff,sizeof(test_buff));
-
-        if ( strcmp(test_buff,input_string+3) != 0 ) {
-            printf("[ERROR] no such directory\n");
+        if (chdir(path) != 0) {
+            perror("cd");
         }
 
     } else if ( strncmp(input_string, "help" , 4 ) == 0 ) {
