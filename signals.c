@@ -5,6 +5,7 @@
 //NOTE: the thing is prompt and input string array should be global else 
 //       you cannot access it on siganl_handler function 
 //
+//ERROR : use waitpid(pid,&status,WUNTRACED); idk where to put it 
 //
 //  siganl_handler( signum ) {
 //
