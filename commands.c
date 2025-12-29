@@ -200,6 +200,10 @@ void execute_internal_commands(char *input_string) {
             printf("[ERROR] no such directory\n");
         }
 
+    } else if ( strncmp(input_string, "help" , 4 ) == 0 ) {
+
+        printf("[USER GUIDE]: \n"); //TODO printing help option
+    
     }
 
 }

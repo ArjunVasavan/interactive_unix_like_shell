@@ -65,12 +65,14 @@ void scan_input(char *prompt, char *input_string) {
 
             case NO_COMMAND: {
 
-                printf("No command\n");
+                printf("%s: command not found\n",command);
 
                 break;
             }
             default:{
-                printf("reached default\n");
+
+                printf("[EDGE CASE]: reached default\n");
+
             }
 
         }
