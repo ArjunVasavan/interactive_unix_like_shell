@@ -60,9 +60,12 @@ void pipe_operation(char *input_string)
 
     }
 
+    pid_t pids[50];   // store child PIDs for waitpid
+
     for (int i = 0; i <= total_pipe_count; i++) {
 
         pid_t pid = fork();
+        pids[i] = pid;
 
         if (pid == -1) {
 
@@ -72,6 +75,9 @@ void pipe_operation(char *input_string)
         }
 
         if (pid == 0) {  // Child process
+            
+            signal(SIGINT, SIG_DFL);
+            signal(SIGTSTP, SIG_DFL);
 
             if (i > 0) {
                 dup2(pipes[i - 1][0], STDIN_FILENO);
@@ -97,9 +103,19 @@ void pipe_operation(char *input_string)
         close(pipes[i][1]);
     }
 
+    int status;
+
     for (int i = 0; i <= total_pipe_count; i++) {
-        wait(NULL);
+        waitpid(pids[i], &status, WUNTRACED);
+
+        if (WIFSTOPPED(status)) {
+            // Pipeline stopped by Ctrl+Z
+            // Shell should regain control
+            break;
+        }
+
     }
+
 }
 
 
@@ -282,7 +298,11 @@ void execute_external_commands(char *input_string,char* command ) {
         exit(1);
     }
 
-    wait(NULL);
+
+    int status;
+
+    waitpid(pid, &status, WUNTRACED);
+
 
 }
 
