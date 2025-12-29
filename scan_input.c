@@ -1,9 +1,11 @@
 #include "header.h"
-#include <stdio.h>
 
 char* external_commands[155];
 
 void scan_input(char *prompt, char *input_string) {
+
+    signal(SIGINT,signal_handler);
+    signal(SIGTSTP,signal_handler);
 
     extract_external_commands(external_commands);
 

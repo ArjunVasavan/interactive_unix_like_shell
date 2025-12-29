@@ -41,8 +41,6 @@ void execute_internal_commands(char *input_string);
 
 void execute_external_commands(char *input_string, char* command);
 
-//NOTE: extract_external_commands(input); MENTORS LOGIC
-
 void signal_handler(int sig_num);
 
 void extract_external_commands(char **external_commands); 

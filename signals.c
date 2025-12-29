@@ -1,3 +1,20 @@
+#include "header.h"
+
+void signal_handler(int signum ) {
+
+    extern char prompt[25];
+
+    if ( signum == SIGINT ) { // ctrl+c
+
+        printf("%s",prompt);
+
+    } else if ( signum == SIGTSTP ) { // ctrl+z
+        
+        printf("%s",prompt);
+    
+    }
+}
+
 //TODO: SIGNAL PART
 //
 //  ctrl + c => code should not be terminated it should print new prompt
@@ -18,14 +35,4 @@
 //              print(prompt);
 //      } 
 //
-//  }
-//      
-//  inside scaninput() {
-//
-//      signal(SIGINT,siganl_handler);
-//
-//      signal(SIGTSTP,siganl_handler); // for ctrl + z
-//
-//      //before the whole code
-// 
 //  }

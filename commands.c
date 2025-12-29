@@ -1,7 +1,4 @@
 #include "header.h"
-#include <stdio.h>
-#include <string.h>
-#include <strings.h>
 
 char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dirs", "let", "eval",
     "set", "unset", "export", "declare", "typeset", "readonly", "getopts", "source",
@@ -275,11 +272,8 @@ void execute_external_commands(char *input_string,char* command ) {
 
     if ( pid == 0 ) { // child
 
-        // TODO: WHEN CHILD PROCESS ARE CREATED AND RUNNING
-        // signal(SIGINT,SIG_DFL); NOTE: use sleep 10 and use ctrl+c
-        // signal(SIGTSTP,SIG_DFL); NOTE: use sleep 10 and use ctrl+z
-        //
-        //**/
+        signal(SIGINT,SIG_DFL);
+        signal(SIGTSTP,SIG_DFL);
 
         execvp(argv[0],argv);
 
