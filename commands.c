@@ -1,7 +1,4 @@
 #include "header.h"
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
 
 char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dirs", "let", "eval",
     "set", "unset", "export", "declare", "typeset", "readonly", "getopts", "source",
@@ -136,11 +133,13 @@ void execute_external_commands(char *input_string,char* command ) {
     input_copy[sizeof(input_copy) - 1] = '\0';
 
     char *argv[20];
+
     int i = 0;
 
     argv[i++] = command;
 
     char *args = input_copy + strlen(command);
+
     while (*args == ' ') args++;
 
     char *token = NULL;
@@ -164,6 +163,7 @@ void execute_external_commands(char *input_string,char* command ) {
         execvp(argv[0],argv);
 
         perror("execvp");
+
         exit(1);
     }
 

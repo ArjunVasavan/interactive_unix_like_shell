@@ -15,7 +15,7 @@
 
 
 #define BUILTIN		1
-#define EXTERNAL	2 //TODO: return it on check_command_type function
+#define EXTERNAL	2 
 #define NO_COMMAND  3
 
 #define ANSI_COLOR_RED     "\x1b[31m"
@@ -39,11 +39,12 @@ void echo(char *input_string, int status);
 
 void execute_internal_commands(char *input_string);
 
-
 void execute_external_commands(char *input_string, char* command);
+
+//NOTE: extract_external_commands(input); MENTORS LOGIC
 
 void signal_handler(int sig_num);
 
-void extract_external_commands(char **external_commands); // convert the file contents to 2d array
+void extract_external_commands(char **external_commands); 
 
 #endif

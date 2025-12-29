@@ -58,6 +58,14 @@ void scan_input(char *prompt, char *input_string) {
 
             case EXTERNAL: {
 
+                // TODO: special case for pipe logic
+                // if ( check if pipe is present ) {
+                //      
+                //      // do that n pipe logic 
+                //       
+                //
+                // }
+                // 
                 execute_external_commands(input_string,command);
 
                 break;
