@@ -1,6 +1,10 @@
-//TODO
+//TODO: SIGNAL PART
 //
 //  ctrl + c => code should not be terminated it should print new prompt
+//
+//NOTE: the thing is prompt and input string array should be global else 
+//       you cannot access it on siganl_handler function 
+//
 //
 //  siganl_handler( signum ) {
 //
@@ -20,8 +24,6 @@
 //      signal(SIGINT,siganl_handler);
 //
 //      signal(SIGTSTP,siganl_handler); // for ctrl + z
-//
-//
 //
 //      //before the whole code
 // 

@@ -179,6 +179,10 @@ void execute_external_commands(char *input_string,char* command ) {
 
     if ( pid == 0 ) { // child
 
+        // TODO: WHEN CHILD PROCESS ARE CREATED AND RUNNING
+        // signal(SIGINT,SIG_DFL); NOTE: use sleep 10 and use ctrl+c
+        // signal(SIGTSTP,SIG_DFL); NOTE: use sleep 10 and use ctrl+z
+
         execvp(argv[0],argv);
 
         perror("execvp");
