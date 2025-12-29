@@ -47,4 +47,8 @@ void signal_handler(int sig_num);
 
 void extract_external_commands(char **external_commands); 
 
+int pipecheck(char* input_string );
+
+void pipe_operation( char* input_string );
+
 #endif

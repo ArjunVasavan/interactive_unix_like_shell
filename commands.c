@@ -7,6 +7,25 @@ char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dir
 
 int external_commands_count = 0; // NOTE Use EXTERN to collect this on that other file
 
+void pipe_operation(char *input_string) {
+
+
+
+}
+
+int pipecheck(char* input_string ) {
+
+    int i = 0;
+
+    while (input_string[i]) {
+        if ( input_string[i] == '|' ) 
+            return 1; // PIPE is present
+    }
+
+    return 0; // PIPE is not present
+
+}
+
 void extract_external_commands(char **external_commands) {
 
     int fd = open("external_commands.txt", O_RDONLY);

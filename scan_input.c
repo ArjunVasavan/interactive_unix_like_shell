@@ -60,15 +60,22 @@ void scan_input(char *prompt, char *input_string) {
 
                 // TODO: special case for pipe logic
                 // if ( check if pipe is present ) {
-                //      
                 //      // do that n pipe logic 
-                //       
-                //
                 // }
                 // 
+                if (pipecheck(input_string) ) {
+
+                    
+
+                    goto pipe_exception;
+                }
+
                 execute_external_commands(input_string,command);
 
+            pipe_exception:
+
                 break;
+
             }
 
             case NO_COMMAND: {
