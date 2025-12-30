@@ -10,3 +10,5 @@ int main(int argc, char** argv) {
     scan_input(prompt,input_string); 
 
 }
+
+// NOTE: ctrl+z bug fix is that dont use make run there use ./a.out
