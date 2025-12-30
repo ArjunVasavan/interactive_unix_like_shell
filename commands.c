@@ -348,6 +348,20 @@ void execute_internal_commands(char *input_string) {
     
     //TODO
     // 
+    // fg -> foreground bg -> background process
+    //
+    // fg -> continues where is paused
+    //
+    // bg -> continues where it paused it will run but on background the terminal promot will come 
+    // jobs
+// [2]   Stopped                 sleep 30
+// [3]-  Stopped                 sleep 20
+// [4]+  Stopped                 sleep 10
+    // if you press bg 3 types the sleep will be done on background and direclty command prompt will come
+    //
+    // on fg one at a time is happened 
+    // 
+    //
     // else if ( echo $$ ) {
     //  
     //      print get pid
@@ -366,6 +380,7 @@ void execute_internal_commands(char *input_string) {
     //      
     //      }
     //} else if ( echo $SHELL ) {
+    //
     //      print path of env variable
     //       
     //      use getenv("SHELL");
@@ -373,6 +388,10 @@ void execute_internal_commands(char *input_string) {
     //      create and buffer and return it to the getenv function
     //      or just print directly becuase is returns char*
     //      
+    //} else if ( ) {
+    //
+    //      
+    //
     //}
 
 }
