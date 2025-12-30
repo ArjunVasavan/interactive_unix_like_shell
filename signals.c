@@ -11,7 +11,6 @@ void signal_handler(int signum ) {
     } else if ( signum == SIGTSTP ) { // ctrl+z
         
         printf("\n");
-
     
     }
 }
