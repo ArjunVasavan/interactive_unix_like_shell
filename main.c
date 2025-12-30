@@ -1,6 +1,6 @@
 #include "header.h"
 
-//TODO: Main should not contain more than 20 - 30 lines
+//NOTE: Main should not contain more than 20 - 30 lines
 
 char prompt[25] = "Minishell: "; // this will be printed on cli
 

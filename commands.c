@@ -1,5 +1,7 @@
 #include "header.h"
+#include <string.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dirs", "let", "eval",
     "set", "unset", "export", "declare", "typeset", "readonly", "getopts", "source",
@@ -335,8 +337,15 @@ void execute_internal_commands(char *input_string) {
 
         printf("[USER GUIDE]: \n"); //TODO printing help option
 
-    } 
+    } else if ( strncmp(input_string,"echo $$",7) == 0 ) {
+    
+        printf("%d",getpid());
 
+    } else if ( strncmp(input_string,"echo $?",7) == 0 ) {
+    
+        //TODO: create 
+    }
+    
     //TODO
     // 
     // else if ( echo $$ ) {

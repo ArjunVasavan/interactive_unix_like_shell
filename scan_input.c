@@ -64,6 +64,8 @@ void scan_input(char *prompt, char *input_string) {
 
                 } else {
 
+                    //TODO : use fork here not inside execute_external_commands function
+
                     execute_external_commands(input_string,command);
 
                 }
