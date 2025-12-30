@@ -306,7 +306,7 @@ void execute_external_commands(char *input_string,char* command ) {
 
 }
 
-
+//TODO: echo$ echo$SHELL echo$$
 void execute_internal_commands(char *input_string) {
 
     if ( strncmp(input_string,"exit",4) == 0 ) {
@@ -335,6 +335,35 @@ void execute_internal_commands(char *input_string) {
 
         printf("[USER GUIDE]: \n"); //TODO printing help option
 
-    }
+    } 
+
+    //TODO
+    // 
+    // else if ( echo $$ ) {
+    //  
+    //      print get pid
+    //
+    // } else if ( echo $? ) { // wheather prev exec was success or failure
+    //      
+    //      NOTE if prev success -> 0 prev fail -> 127 if something executed and ctrl + c is used -> 130
+    //
+    //      declare staus variable as global variable
+    //
+    //      and use => 
+    //
+    //      if ( WIFEXIT () ) {
+    //
+    //          use WEXITSTATUS and print according to it
+    //      
+    //      }
+    //} else if ( echo $SHELL ) {
+    //      print path of env variable
+    //       
+    //      use getenv("SHELL");
+    //
+    //      create and buffer and return it to the getenv function
+    //      or just print directly becuase is returns char*
+    //      
+    //}
 
 }
