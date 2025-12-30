@@ -2,7 +2,6 @@
 
 char* external_commands[155];
 
-
 int status;
 
 void scan_input(char *prompt, char *input_string) {
@@ -24,7 +23,7 @@ void scan_input(char *prompt, char *input_string) {
         scanf("%24[^\n]",input_string);
         getchar(); // Clearing the buffer
 
-        //FIXME : left to do it at last for doing PS1 operation
+        // TODO: PS1 operation
 
         if ( strncmp(input_string,"PS1=",4) == 0 ) {
 
@@ -66,8 +65,6 @@ void scan_input(char *prompt, char *input_string) {
                     pipe_operation(input_string);
 
                 } else {
-
-                    //TODO : use fork here not inside execute_external_commands function
 
                     extern pid_t pid;
 

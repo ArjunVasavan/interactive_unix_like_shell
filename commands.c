@@ -1,10 +1,13 @@
 #include "header.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dirs", "let", "eval",
     "set", "unset", "export", "declare", "typeset", "readonly", "getopts", "source",
     "exit", "exec", "shopt", "caller", "true", "type", "hash", "bind", "help", NULL };
 
-int external_commands_count = 0; // NOTE Use EXTERN to collect this on that other file
+int external_commands_count = 0;
 
 pid_t pid;
 
@@ -108,13 +111,13 @@ void pipe_operation(char *input_string)
 
     }
 
-    int status;
+    int pipe_status;
 
     for (int i = 0; i <= total_pipe_count; i++) {
 
-        waitpid(pids[i], &status, WUNTRACED);
+        waitpid(pids[i], &pipe_status, WUNTRACED);
 
-        if (WIFSTOPPED(status)) {
+        if (WIFSTOPPED(pipe_status)) {
             // Pipeline stopped by Ctrl+Z
             // Shell should regain control
             break;
@@ -203,7 +206,6 @@ void extract_external_commands(char **external_commands) {
     close(fd);
 }
 
-// BUG : stack smash error was happening on here
 char *get_command(char *input_string) {
 
     char tmp_buff[100];
@@ -298,12 +300,11 @@ void execute_external_commands(char *input_string,char* command ) {
 
         execvp(argv[0],argv);
 
-        perror("execvp");
+    perror("execvp");
 
-        exit(1);
+    exit(1);
 }
 
-//TODO: echo$ echo$SHELL echo$$
 void execute_internal_commands(char *input_string) {
 
     if ( strncmp(input_string,"exit",4) == 0 ) {
@@ -330,63 +331,44 @@ void execute_internal_commands(char *input_string) {
 
     } else if ( strncmp(input_string, "help" , 4 ) == 0 ) {
 
-        printf("[USER GUIDE]: \n"); //TODO printing help option
+        printf("[USER GUIDE]: \n"); // TODO: printing help option
 
     } else if ( strncmp(input_string,"echo $$",7) == 0 ) {
-    
+
         printf("%d",getpid());
 
-    } else if ( strncmp(input_string,"echo $?",7) == 0 ) {
-    
-        //TODO: create 
+    } else if ( strcmp(input_string,"echo $?") == 0 ) {
+
+
+        extern int status;
+
+        if (WIFEXITED(status)) {
+            printf("%d\n", WEXITSTATUS(status));
+        }
+        else if (WIFSIGNALED(status)) {
+            printf("%d\n", 128 + WTERMSIG(status));
+        }
+        else {
+            printf("0\n");
+        }
+    } else if ( strcmp(input_string,"echo $SHELL") == 0 ) {
+
+        printf("%s\n",getenv("SHELL"));
+
     }
-    
-    //TODO
-    // 
-    // fg -> foreground bg -> background process
-    //
-    // fg -> continues where is paused
-    //
-    // bg -> continues where it paused it will run but on background the terminal promot will come 
-    // jobs
+
+
+}
+
+// TODO: ground processes
+//
+// fg -> foreground bg -> background process
+// fg -> continues where is paused
+// bg -> continues where it paused it will run but on background the terminal promot will come 
+// jobs
 // [2]   Stopped                 sleep 30
 // [3]-  Stopped                 sleep 20
 // [4]+  Stopped                 sleep 10
-    // if you press bg 3 types the sleep will be done on background and direclty command prompt will come
-    //
-    // on fg one at a time is happened 
-    // 
-    //
-    // else if ( echo $$ ) {
-    //  
-    //      print get pid
-    //
-    // } else if ( echo $? ) { // wheather prev exec was success or failure
-    //      
-    //      NOTE if prev success -> 0 prev fail -> 127 if something executed and ctrl + c is used -> 130
-    //
-    //      declare staus variable as global variable
-    //
-    //      and use => 
-    //
-    //      if ( WIFEXIT () ) {
-    //
-    //          use WEXITSTATUS and print according to it
-    //      
-    //      }
-    //} else if ( echo $SHELL ) {
-    //
-    //      print path of env variable
-    //       
-    //      use getenv("SHELL");
-    //
-    //      create and buffer and return it to the getenv function
-    //      or just print directly becuase is returns char*
-    //      
-    //} else if ( ) {
-    //
-    //      
-    //
-    //}
+// if you press bg 3 types the sleep will be done on background and direclty command prompt will come
+// on fg one at a time is happened 
 
-}
