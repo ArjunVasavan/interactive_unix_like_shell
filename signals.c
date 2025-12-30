@@ -11,7 +11,7 @@ void signal_handler(int signum ) {
         
         if ( pid == 0 ) {
             printf("\033[1;36m");
-            printf("%s",prompt);
+            printf("\n%s",prompt);
             printf("\033[01;33m");
         }
 
@@ -20,7 +20,7 @@ void signal_handler(int signum ) {
         
         if ( pid == 0 ) {
             printf("\033[1;36m");
-            printf("%s",prompt);
+            printf("\n%s",prompt);
             printf("\033[01;33m");
         }
     
