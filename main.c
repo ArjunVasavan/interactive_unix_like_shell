@@ -1,18 +1,11 @@
 #include "header.h"
 
-//NOTE: Main should not contain more than 20 - 30 lines
-
 char prompt[25] = "Minishell: "; // this will be printed on cli
-
 char input_string[25];
 
 int main(int argc, char** argv) {
 
     system("clear"); //  clears the CLI
-
-
-
     scan_input(prompt,input_string); 
-
 
 }

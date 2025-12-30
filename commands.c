@@ -1,7 +1,4 @@
 #include "header.h"
-#include <string.h>
-#include <sys/types.h>
-#include <unistd.h>
 
 char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dirs", "let", "eval",
     "set", "unset", "export", "declare", "typeset", "readonly", "getopts", "source",
@@ -78,22 +75,30 @@ void pipe_operation(char *input_string)
             signal(SIGTSTP, SIG_DFL);
 
             if (i > 0) {
+
                 dup2(pipes[i - 1][0], STDIN_FILENO);
+
             }
 
             if (i < total_pipe_count) {
+
                 dup2(pipes[i][1], STDOUT_FILENO);
+
             }
 
             for (int j = 0; j < total_pipe_count; j++) {
+
                 close(pipes[j][0]);
                 close(pipes[j][1]);
+
             }
 
             execvp(argv[command_index[i]], &argv[command_index[i]]);
             perror("execvp");
             exit(EXIT_FAILURE);
+
         }
+
     }
 
     for (int i = 0; i < total_pipe_count; i++) {
@@ -259,6 +264,9 @@ int check_command_type(char *command) {
 
 void execute_external_commands(char *input_string,char* command ) {
 
+    signal(SIGINT,SIG_DFL);
+    signal(SIGTSTP,SIG_DFL);
+
     char input_copy[1024];
 
     strncpy(input_copy, input_string, sizeof(input_copy) - 1);
@@ -288,24 +296,11 @@ void execute_external_commands(char *input_string,char* command ) {
 
     argv[i] = NULL;
 
-    pid = fork();
-
-    if ( pid == 0 ) { // child
-
-        signal(SIGINT,SIG_DFL);
-        signal(SIGTSTP,SIG_DFL);
-
         execvp(argv[0],argv);
 
         perror("execvp");
 
         exit(1);
-    }
-
-    int status;
-
-    waitpid(pid, &status, WUNTRACED);
-
 }
 
 //TODO: echo$ echo$SHELL echo$$

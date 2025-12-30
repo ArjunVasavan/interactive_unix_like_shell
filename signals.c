@@ -10,20 +10,23 @@ void signal_handler(int signum ) {
 
         
         if ( pid == 0 ) {
+
             printf("\033[1;36m");
-            printf("\n%s",prompt);
+            printf("\n%s\n",prompt);
             printf("\033[01;33m");
+
         }
 
 
     } else if ( signum == SIGTSTP ) { // ctrl+z
         
         if ( pid == 0 ) {
+
             printf("\033[1;36m");
-            printf("\n%s",prompt);
+            printf("\n%s\n",prompt);
             printf("\033[01;33m");
+
         }
     
     }
 }
-

@@ -2,6 +2,9 @@
 
 char* external_commands[155];
 
+
+int status;
+
 void scan_input(char *prompt, char *input_string) {
 
     signal(SIGINT,signal_handler);
@@ -66,7 +69,25 @@ void scan_input(char *prompt, char *input_string) {
 
                     //TODO : use fork here not inside execute_external_commands function
 
-                    execute_external_commands(input_string,command);
+                    extern pid_t pid;
+
+                    pid = fork();
+
+                    if ( pid == 0  ) {
+
+                        signal(SIGINT,SIG_DFL);
+                        signal(SIGTSTP,SIG_DFL);
+
+                        execute_external_commands(input_string,command);
+
+                        exit(1);
+
+                    } else {
+                    
+                        waitpid(pid, &status, WUNTRACED);
+                        pid = 0;
+
+                    }
 
                 }
 
@@ -79,6 +100,7 @@ void scan_input(char *prompt, char *input_string) {
 
                 break;
             }
+
             default: {
 
                 printf("[EDGE CASE]: reached default\n");
