@@ -1,10 +1,13 @@
 #include "header.h"
+#include <sys/types.h>
 
 char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dirs", "let", "eval",
     "set", "unset", "export", "declare", "typeset", "readonly", "getopts", "source",
     "exit", "exec", "shopt", "caller", "true", "type", "hash", "bind", "help", NULL };
 
 int external_commands_count = 0; // NOTE Use EXTERN to collect this on that other file
+
+pid_t pid;
 
 void pipe_operation(char *input_string)
 {
@@ -283,8 +286,7 @@ void execute_external_commands(char *input_string,char* command ) {
 
     argv[i] = NULL;
 
-    pid_t pid = fork();
-
+    pid = fork();
 
     if ( pid == 0 ) { // child
 
@@ -298,11 +300,9 @@ void execute_external_commands(char *input_string,char* command ) {
         exit(1);
     }
 
-
     int status;
 
     waitpid(pid, &status, WUNTRACED);
-
 
 }
 

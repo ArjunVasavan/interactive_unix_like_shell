@@ -4,13 +4,25 @@ void signal_handler(int signum ) {
 
     extern char prompt[25];
 
+    extern pid_t pid;
+
     if ( signum == SIGINT ) { // ctrl+c
 
-        printf("\n");
+        
+        if ( pid == 0 ) {
+            printf("\033[1;36m");
+            printf("%s",prompt);
+            printf("\033[01;33m");
+        }
+
 
     } else if ( signum == SIGTSTP ) { // ctrl+z
         
-        printf("\n");
+        if ( pid == 0 ) {
+            printf("\033[1;36m");
+            printf("%s",prompt);
+            printf("\033[01;33m");
+        }
     
     }
 }
