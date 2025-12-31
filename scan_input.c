@@ -23,7 +23,7 @@ void scan_input(char *prompt, char *input_string) {
         scanf("%24[^\n]",input_string);
         getchar(); // Clearing the buffer
 
-        // TODO: PS1 operation
+        // DONE: PS1 operation
 
         if ( strncmp(input_string,"PS1=",4) == 0 ) {
 
@@ -34,6 +34,7 @@ void scan_input(char *prompt, char *input_string) {
             } else {
 
                 // print ERROR message
+                perror("PS1");
 
             }
 
@@ -82,6 +83,9 @@ void scan_input(char *prompt, char *input_string) {
                     } else {
                     
                         waitpid(pid, &status, WUNTRACED);
+
+                        // NOTE: UNTRACED: eventhough child is getting [stopped] we can clear the resorces of child
+                        
                         pid = 0;
 
                     }

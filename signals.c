@@ -30,3 +30,33 @@ void signal_handler(int signum ) {
     
     }
 }
+
+/*
+ TODO: ctrl+z signal handler
+
+ declare an structure struct strop arr[50]; -> whenever we presss ctrl+z we have to store it
+ inside signal handler we store this 
+
+ if ( signum == SIGTSTP ) {
+    
+    if ( pid == 0 ) {
+        
+        print the minishell prompt
+
+    } else {
+        
+        store it
+
+        for continuing the process you need pid 
+
+        int index => global
+
+        arr[index].spid = pid;
+
+        strcpy(arr[index].name,input_string);
+
+        index+=1;
+    }
+ }
+*/ 
+
