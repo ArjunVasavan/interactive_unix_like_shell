@@ -57,6 +57,13 @@ void signal_handler(int signum ) {
 
         index+=1;
     }
+ } else if ( signum  == SIGCHLD ) {
+    
+    waitpid(-1,&status,WNOHANG);
+
+    NOTE: WNOHANG: if any child terminates it ill immediatly return
+   -1 => for any process
+
  }
 */ 
 

@@ -408,6 +408,18 @@ on fg one at a time is happened
         index-=1; => now we can exectue next process 
 
 
+    } else if ( bg ) {
+        
+        signal(SIGCHLD,signal_handler);
+
+        kill(arr[index-1].spid,SIGCONT);
+
+        index-=1;
+
+        here we call bg multiple times so for multiple process we need multiple wait
+
+
+
     }
 
  }
