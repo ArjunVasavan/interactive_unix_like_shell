@@ -70,7 +70,7 @@ void pipe_operation(char *input_string)
         }
 
         if (pid == 0) {  // Child process
-            
+
             signal(SIGINT, SIG_DFL);
             signal(SIGTSTP, SIG_DFL);
 
@@ -247,7 +247,6 @@ int check_command_type(char *command) {
         i+=1;
     }
 
-
     for ( int i = 0 ; i < external_commands_count ; i++ ) {
 
         if (strcmp(external_commands[i],command) == 0 ) {
@@ -259,7 +258,6 @@ int check_command_type(char *command) {
 
     return NO_COMMAND;
 }
-
 
 void execute_external_commands(char *input_string,char* command ) {
 
@@ -295,7 +293,7 @@ void execute_external_commands(char *input_string,char* command ) {
 
     argv[i] = NULL;
 
-        execvp(argv[0],argv);
+    execvp(argv[0],argv);
 
     perror("execvp");
 
@@ -358,6 +356,7 @@ void execute_internal_commands(char *input_string) {
 }
 
 /*
+
 TODO: Next Step
 
 NOTE: JOBS
@@ -372,10 +371,6 @@ jobs
 if you press bg 3 types the sleep will be done on background and direclty command prompt will come
 on fg one at a time is happened 
 
-*/
-
-/*
-
  NOTE: fg bg command
 
  [101][sleep 10] -> arr[0]
@@ -387,14 +382,14 @@ on fg one at a time is happened
  inside function ->
 
  execute_internal_commands() {
-    
+
     if ( jobs ) {
-        
+
         for ( till 3 ) {
             print the name from struct
         }
     } else if ( fg ){
-        
+
         NOTE: for continuing processes we use KILL
 
         kill(last process pid,SIGCONT) => kill(arr[index - 1].spid,SIGCONT);
@@ -407,9 +402,8 @@ on fg one at a time is happened
 
         index-=1; => now we can exectue next process 
 
-
     } else if ( bg ) {
-        
+
         signal(SIGCHLD,signal_handler);
 
         kill(arr[index-1].spid,SIGCONT);
@@ -417,8 +411,6 @@ on fg one at a time is happened
         index-=1;
 
         here we call bg multiple times so for multiple process we need multiple wait
-
-
 
     }
 
