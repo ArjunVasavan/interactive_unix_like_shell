@@ -34,7 +34,12 @@
  
 
 *};
-*/
+*/ 
+
+typedef struct {
+    int spid;
+    char name[15];
+} Stop;
 
 void scan_input(char *prompt, char *input_string);
 

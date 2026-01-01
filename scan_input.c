@@ -6,10 +6,11 @@ int status;
 
 void scan_input(char *prompt, char *input_string) {
 
-    signal(SIGINT,signal_handler);
-    signal(SIGTSTP,signal_handler);
+    signal(SIGINT,signal_handler); // Interruput
+    signal(SIGTSTP,signal_handler); // Signal Termination Stop
 
     extract_external_commands(external_commands);
+
     extern int external_commands_count;
 
     while (true) {
@@ -84,7 +85,7 @@ void scan_input(char *prompt, char *input_string) {
                     
                         waitpid(pid, &status, WUNTRACED);
 
-                        // NOTE: UNTRACED: eventhough child is getting [stopped] we can clear the resorces of child
+                        // NOTE: UNTRACED: eventhough child is getting [stopped] we clear the resorces of child
                         
                         pid = 0;
 

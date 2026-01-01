@@ -142,6 +142,7 @@ int pipecheck(char* input_string ) {
 
 }
 
+
 void extract_external_commands(char **external_commands) {
 
     int fd = open("external_commands.txt", O_RDONLY);
