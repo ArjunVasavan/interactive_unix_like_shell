@@ -23,7 +23,6 @@ void signal_handler(int signum ) {
 
         }
 
-
     } else if ( signum == SIGTSTP ) { // ctrl+z
 
         if ( pid == 0 ) { // at child process

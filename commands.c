@@ -1,4 +1,6 @@
 #include "header.h"
+#include <stdio.h>
+#include <string.h>
 
 char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dirs", "let", "eval",
     "set", "unset", "export", "declare", "typeset", "readonly", "getopts", "source",
@@ -350,6 +352,17 @@ void execute_internal_commands(char *input_string) {
     } else if ( strcmp(input_string,"echo $SHELL") == 0 ) {
 
         printf("%s\n",getenv("SHELL"));
+
+    } else if ( strcmp(input_string,"jobs") == 0 ) {
+    
+        extern int signal_details_index;
+        extern Stop signal_details[50];
+
+        for ( int i = 0 ; i < signal_details_index ; i++ ) {
+
+            printf("[%d] %s\n",i+1,signal_details[i].name);
+
+        }
 
     }
 
