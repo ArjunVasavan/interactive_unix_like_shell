@@ -26,15 +26,6 @@
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
-// TODO: jobs
-
-/*struct Stop {
- int spid;
- char name[15];
- 
-
-*};
-*/ 
 
 typedef struct {
     int spid;
