@@ -1,6 +1,9 @@
 #include "header.h"
+#include <signal.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <sys/wait.h>
 
 char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dirs", "let", "eval",
     "set", "unset", "export", "declare", "typeset", "readonly", "getopts", "source",
@@ -364,70 +367,34 @@ void execute_internal_commands(char *input_string) {
 
         }
 
+    } else if ( strcmp(input_string,"fg") == 0 ) {
+
+        extern int signal_details_index;
+        extern Stop signal_details[50];
+
+        // NOTE: for continuing processes we use KILL
+
+        kill(signal_details[signal_details_index - 1 ].spid,SIGCONT);
+
+        // TODO: DSA is needed to implemented here
+
+        waitpid(signal_details[signal_details_index - 1].spid,NULL,WUNTRACED);
+
+        signal_details_index-=1;
+    } else if ( strcmp(input_string,"bg") == 0 ) {
+    
+        extern int signal_details_index;
+        extern Stop signal_details[50];
+
+        signal(SIGCHLD,signal_handler);
+
+        kill(signal_details[signal_details_index - 1 ].spid,SIGCONT);
+
+        signal_details_index-=1;
+
+
     }
 
 
 }
 
-/*
-
-TODO: Next Step
-
-NOTE: JOBS
-
-fg -> foreground bg -> background process
-fg -> continues where is paused
-bg -> continues where it paused it will run but on background the terminal promot will come 
-jobs
-[2]   Stopped                 sleep 30
-[3]-  Stopped                 sleep 20
-[4]+  Stopped                 sleep 10
-if you press bg 3 types the sleep will be done on background and direclty command prompt will come
-on fg one at a time is happened 
-
- NOTE: fg bg command
-
- [101][sleep 10] -> arr[0]
- [102][sleep 5] -> arr[1]
- [103][sleep 20] -> arr[2]
-
- now index will be 3 
-
- inside function ->
-
- execute_internal_commands() {
-
-    if ( jobs ) {
-
-        for ( till 3 ) {
-            print the name from struct
-        }
-    } else if ( fg ){
-
-        NOTE: for continuing processes we use KILL
-
-        kill(last process pid,SIGCONT) => kill(arr[index - 1].spid,SIGCONT);
-
-        for deleting node we use DSA there here without DSA
-
-        here if process is completed until there we have to use wait system call 
-
-        waitpid(arr[index-1].spid,NULL,WUNTRACED);
-
-        index-=1; => now we can exectue next process 
-
-    } else if ( bg ) {
-
-        signal(SIGCHLD,signal_handler);
-
-        kill(arr[index-1].spid,SIGCONT);
-
-        index-=1;
-
-        here we call bg multiple times so for multiple process we need multiple wait
-
-    }
-
- }
-
-*/
