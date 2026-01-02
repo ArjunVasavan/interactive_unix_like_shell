@@ -38,78 +38,79 @@ void scan_input(char *prompt, char *input_string) {
 
             }
 
-        }
+        } else {    
 
-        char* command = get_command(input_string);
+            char* command = get_command(input_string);
 
-        if ( command == NULL ) {
+            if ( command == NULL ) {
 
-            perror("[ERROR] < get_command > founded ' ' at beginning ");
+                perror("[ERROR] < get_command > founded ' ' at beginning ");
 
-        }
-
-        int type = check_command_type(command);
-
-        switch (type) {
-
-            case BUILTIN: {
-
-                execute_internal_commands(input_string);
-
-                break;
             }
 
-            case EXTERNAL: {
+            int type = check_command_type(command);
 
-                if ( pipecheck(input_string) ) {
+            switch (type) {
 
-                    pipe_operation(input_string);
+                case BUILTIN: {
 
-                } else {
+                    execute_internal_commands(input_string);
 
-                    extern pid_t pid;
+                    break;
+                }
 
-                    pid = fork();
+                case EXTERNAL: {
 
-                    if ( pid == 0  ) {
+                    if ( pipecheck(input_string) ) {
 
-                        signal(SIGINT,SIG_DFL);
-                        signal(SIGTSTP,SIG_DFL);
-
-                        execute_external_commands(input_string,command);
-
-                        exit(1);
+                        pipe_operation(input_string);
 
                     } else {
-                    
-                        waitpid(pid, &status, WUNTRACED);
 
-                        // NOTE: UNTRACED: eventhough child is getting [stopped] we clear the resorces of child
-                        
-                        pid = 0;
+                        extern pid_t pid;
+
+                        pid = fork();
+
+                        if ( pid == 0  ) {
+
+                            signal(SIGINT,SIG_DFL);
+                            signal(SIGTSTP,SIG_DFL);
+
+                            execute_external_commands(input_string,command);
+
+                            exit(1);
+
+                        } else {
+
+                            waitpid(pid, &status, WUNTRACED);
+
+                            // NOTE: UNTRACED: eventhough child is getting [stopped] we clear the resorces of child
+
+                            pid = 0;
+
+                        }
 
                     }
 
+                    break;
                 }
 
-                break;
+                case NO_COMMAND: {
+
+                    printf("%s: command not found\n",command);
+
+                    break;
+                }
+
+                default: {
+
+                    printf("[EDGE CASE]: reached default\n");
+
+                }
+
             }
 
-            case NO_COMMAND: {
-
-                printf("%s: command not found\n",command);
-
-                break;
-            }
-
-            default: {
-
-                printf("[EDGE CASE]: reached default\n");
-
-            }
-
+            free(command);
         }
-
-        free(command);
     }
 }
