@@ -335,14 +335,22 @@ void execute_internal_commands(char *input_string) {
 
     } else if ( strcmp(input_string,"echo $?") == 0 ) {
 
+        // NOTE: echo $? => exit status of last foreground command.
+        // WIFSIGNALED   => true if killed by signal else false
+        // WTERMSIG      => which signal killed the process
+        // WTERMSIG+128  => POSIX conversion for echo $? 
+        // WIFEXITED     => child process terminated normally or not?
+        // WEXITSTATUS   => exit code returned by child
+        // 0             => success/nothing went wrong
 
         extern int status;
 
-        if (WIFEXITED(status)) {
-            printf("%d\n", WEXITSTATUS(status));
+        if (WIFEXITED(status)) { // command exited normally?
+            printf("%d\n", WEXITSTATUS(status));  // exit code returned by child
         }
-        else if (WIFSIGNALED(status)) {
-            printf("%d\n", 128 + WTERMSIG(status));
+        else if (WIFSIGNALED(status)) { // is child terminated by signal?
+            printf("%d\n", 128 + WTERMSIG(status)); 
+
         }
         else {
             printf("0\n");
