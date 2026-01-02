@@ -25,8 +25,6 @@ void scan_input(char *prompt, char *input_string) {
         scanf("%24[^\n]",input_string);
         getchar(); // Clearing the buffer
 
-        // DONE: PS1 operation
-
         if ( strncmp(input_string,"PS1=",4) == 0 ) {
 
             if ( input_string[4] != ' ' ) {
