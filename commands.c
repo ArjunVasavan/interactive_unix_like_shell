@@ -1,4 +1,5 @@
 #include "header.h"
+#include <stdio.h>
 
 char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dirs", "let", "eval",
     "set", "unset", "export", "declare", "typeset", "readonly", "getopts", "source",
@@ -209,8 +210,7 @@ char *get_command(char *input_string) {
     char tmp_buff[100];
     int i = 0;
 
-    if (input_string[0] == ' ')
-        return NULL;
+    if (input_string[0] == ' ') return NULL;
 
     while (input_string[i] != ' ' &&
         input_string[i] != '\0' &&
@@ -232,7 +232,6 @@ char *get_command(char *input_string) {
 int check_command_type(char *command) {
 
     extern int external_commands_count;
-
     extern char* external_commands[155]; 
 
     int i = 0;
@@ -335,13 +334,15 @@ void execute_internal_commands(char *input_string) {
 
     } else if ( strcmp(input_string,"echo $?") == 0 ) {
 
-        // NOTE: echo $? => exit status of last foreground command.
-        // WIFSIGNALED   => true if killed by signal else false
-        // WTERMSIG      => which signal killed the process
-        // WTERMSIG+128  => POSIX conversion for echo $? 
-        // WIFEXITED     => child process terminated normally or not?
-        // WEXITSTATUS   => exit code returned by child
-        // 0             => success/nothing went wrong
+        /*
+        NOTE: echo $? => exit status of last foreground command.
+        WIFSIGNALED   => true if killed by signal else false
+        WTERMSIG      => which signal killed the process
+        WTERMSIG+128  => POSIX conversion for echo $? 
+        WIFEXITED     => child process terminated normally or not?
+        WEXITSTATUS   => exit code returned by child
+        0             => success/nothing went wrong
+        */
 
         extern int status;
 

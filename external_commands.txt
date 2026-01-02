@@ -150,4 +150,4 @@ zgrep
 zless
 zmore
 znew
-
+wc
