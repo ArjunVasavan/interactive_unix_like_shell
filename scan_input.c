@@ -21,6 +21,7 @@ void scan_input(char *prompt, char *input_string) {
         printf("$ ");
         printf("\033[0m");
 
+        input_string[0] = '\0'; // clearing buffer first 
         scanf("%24[^\n]",input_string);
         getchar(); // Clearing the buffer
 
