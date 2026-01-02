@@ -372,29 +372,48 @@ void execute_internal_commands(char *input_string) {
         extern int signal_details_index;
         extern Stop signal_details[50];
 
+        if (signal_details_index == 0) {
+            printf("fg: no current job\n");
+            return;
+        }
+
+        int job_index = signal_details_index - 1;
+
         // NOTE: for continuing processes we use KILL
 
-        kill(signal_details[signal_details_index - 1 ].spid,SIGCONT);
+        kill(signal_details[job_index].spid,SIGCONT);
 
         // TODO: DSA is needed to implemented here
 
-        waitpid(signal_details[signal_details_index - 1].spid,NULL,WUNTRACED);
+        waitpid(signal_details[job_index].spid,NULL,WUNTRACED);
 
-        signal_details_index-=1;
+        // Remove from array by shifting all elements after it
+
+        for (int i = job_index; i < signal_details_index - 1; i++) {
+            signal_details[i] = signal_details[i + 1];
+        }
+
+        signal_details_index--;
+
     } else if ( strcmp(input_string,"bg") == 0 ) {
     
         extern int signal_details_index;
         extern Stop signal_details[50];
 
+        if (signal_details_index == 0) {
+            printf("bg: no current job\n");
+            return;
+        }
+
+        int job_index = signal_details_index - 1;
+
         signal(SIGCHLD,signal_handler);
 
-        kill(signal_details[signal_details_index - 1 ].spid,SIGCONT);
+        kill(signal_details[job_index].spid,SIGCONT);
 
-        signal_details_index-=1;
-
+        // NOTE: SIGCHLD handler remove it when process finishes
 
     }
 
 
 }
-
