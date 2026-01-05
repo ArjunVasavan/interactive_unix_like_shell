@@ -15,12 +15,16 @@ void signal_handler(int signum) {
             printf("\033[1;36m");
             printf("\n%s\n", prompt);
             printf("\033[01;33m");
+            printf("$ ");
+            printf("\033[0m");
         }
     } else if (signum == SIGTSTP) { // ctrl+z
         if (pid == 0) { // at child process
             printf("\033[1;36m");
             printf("\n%s\n", prompt);
             printf("\033[01;33m");
+            printf("$ ");
+            printf("\033[0m");
         } else { // during parent process ctrl+z is called
             extern char input_string[25];
             signal_details[signal_details_index].spid = pid;
