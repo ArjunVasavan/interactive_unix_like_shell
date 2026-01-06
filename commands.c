@@ -9,8 +9,7 @@ int external_commands_count = 0;
 
 pid_t pid;
 
-void pipe_operation(char *input_string)
-{
+void pipe_operation(char *input_string) {
     char input_copy[1024];
     strncpy(input_copy, input_string, sizeof(input_copy) - 1);
     input_copy[sizeof(input_copy) - 1] = '\0';
