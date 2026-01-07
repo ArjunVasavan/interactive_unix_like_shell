@@ -1,5 +1,4 @@
 #include "header.h"
-#include <string.h>
 
 char* external_commands[155];
 int status;
@@ -22,8 +21,15 @@ void scan_input(char *prompt, char *input_string) {
         printf("\033[0m");
 
         input_string[0] = '\0'; // clearing buffer first 
-        scanf("%24[^\n]",input_string);
+        int scan_ret = scanf("%24[^\n]",input_string);
         getchar(); // Clearing the buffer
+        
+        if ( scan_ret == EOF ) {
+
+            printf("[ERROR]: out of bound signal is used\n");
+            exit(1);
+
+        }
 
         if ( strncmp(input_string,"PS1=",4) == 0 ) {
 
@@ -43,8 +49,9 @@ void scan_input(char *prompt, char *input_string) {
 
             if ( command == NULL ) {
 
-                perror("[ERROR] < get_command > founded ' ' at beginning ");
+                fprintf(stderr,"[ERROR] < get_command > founded ' ' at beginning\n");
 
+                goto error_handling_command;
             }
 
             int type = check_command_type(command);
@@ -110,6 +117,7 @@ void scan_input(char *prompt, char *input_string) {
 
             }
 
+        error_handling_command:
             free(command);
         }
     }
