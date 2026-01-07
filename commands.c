@@ -325,7 +325,53 @@ void execute_internal_commands(char *input_string) {
 
     } else if ( strncmp(input_string, "help" , 4 ) == 0 ) {
 
-        printf("[USER GUIDE]: \n"); // TODO: printing help option
+        printf("[USER GUIDE]: \n"); 
+
+    error_case:
+        printf("which commands you want to see : \n");
+        printf("1. Builtin \n2. External \nEnter your choice : ");
+        int choice;
+        scanf("%d",&choice);
+
+        switch (choice) {
+
+            case 1: {
+
+                printf("Built-in commands:\n");
+                for (int i = 0; builtins[i] != NULL; i++)
+                {
+                    printf("  %-10s\n", builtins[i]);
+                }
+
+                break;
+            }
+
+            case 2: {
+
+                extern char* external_commands[155]; 
+                int i = 0;
+                printf("External commands:\n");
+
+                while(external_commands[i] != NULL) {
+
+                    printf("  %-10s\n",external_commands[i]);
+                    i+=1;
+                }
+
+                break;
+            }
+
+            default:{
+                printf("[ERROR]: Enter 1 or 2 \n");
+                goto error_case;
+            }
+
+        }
+
+        // FIXME: repeated command printing bug
+        // i solved this bug using __fpurge
+        // the confusion is that if i use fflush it wont work
+        __fpurge(stdin);
 
     } else if ( strncmp(input_string,"echo $$",7) == 0 ) {
 
@@ -360,7 +406,7 @@ void execute_internal_commands(char *input_string) {
         printf("%s\n",getenv("SHELL"));
 
     } else if ( strcmp(input_string,"jobs") == 0 ) {
-    
+
         extern int signal_details_index;
         extern Stop signal_details[50];
 
@@ -399,7 +445,7 @@ void execute_internal_commands(char *input_string) {
         signal_details_index--;
 
     } else if ( strcmp(input_string,"bg") == 0 ) {
-    
+
         extern int signal_details_index;
         extern Stop signal_details[50];
 

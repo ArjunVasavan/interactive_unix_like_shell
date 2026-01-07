@@ -1,4 +1,5 @@
 #include "header.h"
+#include <string.h>
 
 char* external_commands[155];
 int status;
@@ -95,8 +96,9 @@ void scan_input(char *prompt, char *input_string) {
 
                 case NO_COMMAND: {
 
-                    printf("%s: command not found\n",command);
-
+                    if ( strncmp(command,"help",4) != 0 ) {
+                        printf("%s: command not found\n",command);
+                    }
                     break;
                 }
 
