@@ -7,6 +7,7 @@ Stop signal_details[50];
 int signal_details_index = 0;
 
 void signal_handler(int signum) {
+
     extern char prompt[25];
     extern pid_t pid;
 
@@ -40,10 +41,8 @@ void signal_handler(int signum) {
         pid_t terminated_pid = waitpid(-1, &status, WNOHANG);
 
         if (terminated_pid > 0) {
-            // Find and remove the terminated process from array
             for (int i = 0; i < signal_details_index; i++) {
                 if (signal_details[i].spid == terminated_pid) {
-                    // Shift all elements after it down
                     for (int j = i; j < signal_details_index - 1; j++) {
                         signal_details[j] = signal_details[j + 1];
                     }

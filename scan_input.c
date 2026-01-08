@@ -1,6 +1,4 @@
 #include "header.h"
-#include <stdio.h>
-#include <string.h>
 
 char* external_commands[155];
 int status;
@@ -26,7 +24,7 @@ void scan_input(char *prompt, char *input_string) {
         input_string[0] = '\0'; // clearing buffer first 
         int scan_ret = scanf("%1023[^\n]",input_string);
         getchar(); // Clearing the buffer
-        
+
         if ( scan_ret == EOF ) {
 
             printf("[ERROR]: out of bound signal is used\n");

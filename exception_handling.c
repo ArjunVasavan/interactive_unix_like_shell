@@ -1,36 +1,38 @@
 #include "header.h"
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
 
 void inital_space_handling( char* input_string ) {
+
     while ( 1 ) {
+
         if  ( input_string[0] == ' ' ) {
+
             int i = 0;
             while (input_string[i]) {
+
                 input_string[i] = input_string[i+1];
                 i+=1;
+
             }
+
         } else {
-            printf("Result is %s\n",input_string);
-            printf("Size is %lu\n",strlen(input_string));
+
             return;
+
         }
     }
 }
 
 
-void pipe_alligner(char *input_string)
-{
+void pipe_alligner(char *input_string) {
+
     char temp_buff[1024];
     int i = 0, j = 0;
 
-    while (input_string[i] && j < sizeof(temp_buff) - 1)
-    {
+    while (input_string[i] && j < sizeof(temp_buff) - 1) {
+
         if (input_string[i] == '|' &&
             j > 0 &&
-            temp_buff[j - 1] != ' ')
-        {
+            temp_buff[j - 1] != ' ') {
             temp_buff[j++] = ' ';
         }
 
@@ -38,8 +40,7 @@ void pipe_alligner(char *input_string)
 
         if (input_string[i] == '|' &&
             input_string[i + 1] &&
-            input_string[i + 1] != ' ')
-        {
+            input_string[i + 1] != ' ') {
             temp_buff[j++] = ' ';
         }
 
@@ -48,5 +49,5 @@ void pipe_alligner(char *input_string)
 
     temp_buff[j] = '\0';
     strcpy(input_string, temp_buff);
-}
 
+}

@@ -1,6 +1,4 @@
 #include "header.h"
-#include <stdio.h>
-#include <string.h>
 
 char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dirs", "let", "eval",
     "set", "unset", "export", "declare", "typeset", "readonly", "getopts", "source",
@@ -11,15 +9,17 @@ int external_commands_count = 0;
 pid_t pid;
 
 void pipe_operation(char *input_string) {
+
     char input_copy[1024];
-    
 
     pipe_alligner(input_string);
 
     strncpy(input_copy, input_string, sizeof(input_copy) - 1);
+
     input_copy[sizeof(input_copy) - 1] = '\0';
     char *argv[100];
     int argc = 0;
+
     char *token = strtok(input_copy, " ");
 
     while (token != NULL) {
@@ -216,8 +216,6 @@ char *get_command(char *input_string) {
     char tmp_buff[1024];
     int i = 0;
 
-    // if (input_string[0] == ' ') return NULL;
-
     while (input_string[i] != ' ' &&
         input_string[i] != '\0' &&
         i < 1023) {
@@ -291,8 +289,7 @@ void execute_external_commands(char *input_string,char* command ) {
     if (*args != '\0')
         token = strtok(args, " ");
 
-    while (token != NULL && i < 19)
-    {
+    while (token != NULL && i < 19) {
         argv[i++] = token;
         token = strtok(NULL, " ");
     }
@@ -311,7 +308,9 @@ void execute_external_commands(char *input_string,char* command ) {
 void execute_internal_commands(char *input_string) {
 
     if ( strncmp(input_string,"exit",4) == 0 ) {
+
         exit(0);
+
     } else if ( strncmp(input_string,"pwd",3) == 0 ) {
 
         char buff[550];
@@ -322,14 +321,16 @@ void execute_internal_commands(char *input_string) {
             exit(1);
         }
 
-        printf("PATH: %s\n",buff);
+        printf("%s\n",buff);
 
     } else if ( strncmp ( input_string , "cd" , 2) == 0  ) {
 
         char *path = input_string + 3;   // after "cd "
 
         if (chdir(path) != 0) {
+
             perror("cd");
+
         }
 
     } else if ( strncmp(input_string, "help" , 4 ) == 0 ) {
@@ -337,8 +338,10 @@ void execute_internal_commands(char *input_string) {
         printf("[USER GUIDE]: \n"); 
 
     error_case:
+
         printf("which commands you want to see : \n");
         printf("1. Builtin \n2. External \nEnter your choice : ");
+
         int choice;
         scanf("%d",&choice);
 
@@ -347,9 +350,11 @@ void execute_internal_commands(char *input_string) {
             case 1: {
 
                 printf("Built-in commands:\n");
-                for (int i = 0; builtins[i] != NULL; i++)
-                {
+
+                for (int i = 0; builtins[i] != NULL; i++) {
+
                     printf("  %-10s\n", builtins[i]);
+
                 }
 
                 break;
@@ -371,8 +376,10 @@ void execute_internal_commands(char *input_string) {
             }
 
             default:{
+
                 printf("[ERROR]: Enter 1 or 2 \n");
                 goto error_case;
+
             }
 
         }
@@ -380,6 +387,7 @@ void execute_internal_commands(char *input_string) {
         // FIXME: repeated command printing bug
         // i solved this bug using __fpurge
         // the confusion is that if i use fflush it wont work
+        
         __fpurge(stdin);
 
     } else if ( strncmp(input_string,"echo $$",7) == 0 ) {
@@ -401,15 +409,21 @@ void execute_internal_commands(char *input_string) {
         extern int status;
 
         if (WIFEXITED(status)) { // command exited normally?
+            
             printf("%d\n", WEXITSTATUS(status));  // exit code returned by child
+            
         }
         else if (WIFSIGNALED(status)) { // is child terminated by signal?
+            
             printf("%d\n", 128 + WTERMSIG(status)); 
 
         }
         else {
+
             printf("0\n");
+
         }
+
     } else if ( strcmp(input_string,"echo $SHELL") == 0 ) {
 
         printf("%s\n",getenv("SHELL"));
@@ -431,8 +445,10 @@ void execute_internal_commands(char *input_string) {
         extern Stop signal_details[50];
 
         if (signal_details_index == 0) {
+
             printf("fg: no current job\n");
             return;
+
         }
 
         int job_index = signal_details_index - 1;
@@ -448,7 +464,9 @@ void execute_internal_commands(char *input_string) {
         // Remove from array by shifting all elements after it
 
         for (int i = job_index; i < signal_details_index - 1; i++) {
+
             signal_details[i] = signal_details[i + 1];
+
         }
 
         signal_details_index--;
@@ -466,12 +484,9 @@ void execute_internal_commands(char *input_string) {
         int job_index = signal_details_index - 1;
 
         signal(SIGCHLD,signal_handler);
-
         kill(signal_details[job_index].spid,SIGCONT);
 
         // NOTE: SIGCHLD handler remove it when process finishes
 
     }
-
-
 }

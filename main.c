@@ -6,7 +6,6 @@ char input_string[1024];
 int main(int argc, char** argv) {
 
     system("clear"); //  clears the CLI at initial
-
     scan_input(prompt,input_string);
 
 }
