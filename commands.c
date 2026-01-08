@@ -1,4 +1,6 @@
 #include "header.h"
+#include <stdio.h>
+#include <string.h>
 
 char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dirs", "let", "eval",
     "set", "unset", "export", "declare", "typeset", "readonly", "getopts", "source",
@@ -133,8 +135,6 @@ void pipe_operation(char *input_string) {
 int pipecheck(char* input_string ) {
 
     int i = 0;
-
-    
 
     while (input_string[i]) {
 
