@@ -54,4 +54,5 @@ int pipecheck(char* input_string );
 
 void pipe_operation( char* input_string );
 
+void inital_space_handling( char* input_string );
 #endif

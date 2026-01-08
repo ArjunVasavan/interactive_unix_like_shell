@@ -34,6 +34,12 @@ void scan_input(char *prompt, char *input_string) {
 
         }
 
+        if ( input_string[0] == ' ' ) {
+
+            inital_space_handling(input_string);
+
+        }
+
         if ( strncmp(input_string,"PS1=",4) == 0 ) {
 
             if ( input_string[4] != ' ' ) {
