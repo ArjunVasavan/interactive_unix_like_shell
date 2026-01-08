@@ -12,6 +12,10 @@ pid_t pid;
 
 void pipe_operation(char *input_string) {
     char input_copy[1024];
+    
+
+    pipe_alligner(input_string);
+
     strncpy(input_copy, input_string, sizeof(input_copy) - 1);
     input_copy[sizeof(input_copy) - 1] = '\0';
     char *argv[100];
@@ -129,6 +133,8 @@ void pipe_operation(char *input_string) {
 int pipecheck(char* input_string ) {
 
     int i = 0;
+
+    
 
     while (input_string[i]) {
 

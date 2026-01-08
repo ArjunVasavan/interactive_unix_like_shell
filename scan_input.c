@@ -40,6 +40,10 @@ void scan_input(char *prompt, char *input_string) {
 
         }
 
+        if ( pipecheck(input_string) ) {
+            pipe_alligner(input_string);
+        }
+
         if ( strncmp(input_string,"PS1=",4) == 0 ) {
 
             if ( input_string[4] != ' ' ) {
