@@ -1,5 +1,6 @@
 #include "header.h"
 #include <stdio.h>
+#include <string.h>
 
 char *builtins[] = {"echo", "printf", "read", "cd", "pwd", "pushd", "popd", "dirs", "let", "eval",
     "set", "unset", "export", "declare", "typeset", "readonly", "getopts", "source",
@@ -206,14 +207,14 @@ void extract_external_commands(char **external_commands) {
 
 char *get_command(char *input_string) {
 
-    char tmp_buff[100];
+    char tmp_buff[1024];
     int i = 0;
 
-    if (input_string[0] == ' ') return NULL;
+    // if (input_string[0] == ' ') return NULL;
 
     while (input_string[i] != ' ' &&
         input_string[i] != '\0' &&
-        i < 99) {
+        i < 1023) {
 
         tmp_buff[i] = input_string[i];
         i++;
@@ -291,6 +292,8 @@ void execute_external_commands(char *input_string,char* command ) {
     }
 
     argv[i] = NULL;
+
+    input_string[0] = '\0';
 
     execvp(argv[0],argv);
 

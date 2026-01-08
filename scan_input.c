@@ -24,7 +24,7 @@ void scan_input(char *prompt, char *input_string) {
         );
 
         input_string[0] = '\0'; // clearing buffer first 
-        int scan_ret = scanf("%24[^\n]",input_string);
+        int scan_ret = scanf("%1023[^\n]",input_string);
         getchar(); // Clearing the buffer
         
         if ( scan_ret == EOF ) {
@@ -52,7 +52,7 @@ void scan_input(char *prompt, char *input_string) {
 
             if ( command == NULL ) {
 
-                fprintf(stderr,"[ERROR] < get_command > founded ' ' at beginning\n");
+                fprintf(stderr,"[ERROR] from get_command \n");
 
                 goto error_handling_command;
             }
@@ -123,6 +123,7 @@ void scan_input(char *prompt, char *input_string) {
 
         error_handling_command:
             free(command);
+
         }
     }
 }
