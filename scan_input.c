@@ -17,7 +17,7 @@ void scan_input(char *prompt, char *input_string) {
     while (true) { 
 
         printf(
-            "\n\033[1;36m%s"
+            "\033[1;36m%s"
             "\033[01;33m$ "
             "\033[0m",
             prompt
