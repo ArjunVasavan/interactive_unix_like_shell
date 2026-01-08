@@ -1,7 +1,7 @@
 #include "header.h"
 
 char prompt[25] = "Minishell: "; // this will be printed on cli as default
-char input_string[25];
+char input_string[1024];
 
 int main(int argc, char** argv) {
 

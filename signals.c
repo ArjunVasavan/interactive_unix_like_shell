@@ -13,7 +13,7 @@ void signal_handler(int signum) {
     if (signum == SIGINT) { // ctrl+c
         if (pid == 0) {
             printf(
-                "\n\033[1;36m%s\n"
+                "\n\033[1;36m%s"
                 "\033[01;33m$ "
                 "\033[0m",
                 prompt
@@ -23,7 +23,7 @@ void signal_handler(int signum) {
     } else if (signum == SIGTSTP) { // ctrl+z
         if (pid == 0) { // at child process
             printf(
-                "\n\033[1;36m%s\n"
+                "\n\033[1;36m%s"
                 "\033[01;33m$ "
                 "\033[0m",
                 prompt
