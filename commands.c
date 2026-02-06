@@ -10,10 +10,10 @@ int external_commands_count = 0;
 
 pid_t pid;
 
+
 void pipe_operation(char *input_string) {
 
     char input_copy[1024];
-
     pipe_alligner(input_string);
 
     strncpy(input_copy, input_string, sizeof(input_copy) - 1);
@@ -22,7 +22,7 @@ void pipe_operation(char *input_string) {
     char *argv[100];
     int argc = 0;
 
-    char *token = strtok(input_copy, " ");
+    char *token = strtok(input_copy , " ");
 
     while (token != NULL) {
 
