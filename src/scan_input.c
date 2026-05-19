@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../include/header.h"
 
 char* external_commands[155];
 int status;

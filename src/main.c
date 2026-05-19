@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../include/header.h"
 
 char prompt[25] = "Minishell: "; // this will be printed on cli as default
 char input_string[1024];

@@ -1,5 +1,4 @@
-#include "header.h"
-
+#include "../include/header.h"
 void inital_space_handling( char* input_string ) {
 
     while ( 1 ) {

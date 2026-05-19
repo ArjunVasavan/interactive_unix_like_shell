@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../include/header.h"
 #include <signal.h>
 #include <string.h>
 #include <sys/wait.h>
