@@ -1,17 +1,24 @@
 CC = gcc
-CFLAGS = -g -std=c11
+CFLAGS = -Wall -Wextra -I./include
 
-TARGET = MINISHELL
+SRC_DIR = src
+SRCS = $(SRC_DIR)/main.c \
+       $(SRC_DIR)/scan_input.c \
+       $(SRC_DIR)/commands.c \
+       $(SRC_DIR)/signals.c \
+       $(SRC_DIR)/exception_handling.c
+
+TARGET = minishell
 
 all: $(TARGET)
 
-$(TARGET): *.c
-	$(CC) $(CFLAGS) $^ -o $@
-
-run: $(TARGET)
-	./$(TARGET)
+$(TARGET): $(SRCS)
+	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)
 
 clean:
 	rm -f $(TARGET)
 
-.PHONY: all run clean
+run: $(TARGET)
+	./$(TARGET)
+
+.PHONY: all clean run
